@@ -119,10 +119,11 @@ def dump(pkg_name, api, mds=None):
                 click.secho("[DEXDump]: Skip duplicate dex {}<{}>".format(info['addr'], md), fg="blue")
                 continue
             mds.append(md)
-            if not os.path.exists("./" + pkg_name + "/"):
-                os.mkdir("./" + pkg_name + "/")
+            dir="./" + pkg_name.replace(":","-") + "/"
+            if not os.path.exists(dir):
+                os.mkdir(dir)
             bs = dex_fix(bs)
-            with open(pkg_name + "/" + info['addr'] + ".dex", 'wb') as out:
+            with open(dir + info['addr'] + ".dex", 'wb') as out:
                 out.write(bs)
             click.secho("[DEXDump]: DexSize={}, DexMd5={}, SavePath={}/{}/{}.dex"
                         .format(hex(info['size']), md, os.getcwd(), pkg_name, info['addr']), fg='green')
